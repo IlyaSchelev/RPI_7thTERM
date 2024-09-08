@@ -1,0 +1,191 @@
+/* Базовый стиль для всего документа */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Стили для заголовка */
+h1 {
+    background-color: #317efb;
+    color: white;
+    padding: 30px 50px;
+    border-radius: 8px 8px 0 0;
+    margin: -20px -20px 20px;
+    text-align: left;
+    font-size: 2rem; /* Использование vw для респонсивных шрифтов */
+}
+
+/* Секция новой задачи */
+.new-task {
+    margin-left: 50px;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    width: 40%; 
+    height: auto; 
+    padding: 20px; 
+    background-color: #ffffff; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.new-task h3 {
+    font-size: 2rem; /* Использование rem для гибкости */
+    margin-top: 0px;
+}
+
+.new-task input {
+    width: 60%;
+    padding: 1rem; 
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.new-task button {
+    font-size: 1rem;
+    padding: 1rem;
+    margin-left: 10px;
+    background-color: #317efb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Общие стили для колонок */
+.columns {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+    flex-wrap: wrap; /* Flexbox с переносом на маленьких экранах */
+}
+
+.column {
+    flex: 1;
+    margin-right: 50px;
+    margin-bottom: 20px; /* Для отступов снизу между колонками на маленьких экранах */
+}
+
+.columns .column h2 {
+    font-size: 18px;
+    text-align: left;
+    width: 30%;
+    font-weight: bold; /* Жирный шрифт */
+    border-radius: 8px; /* Закругленные углы */
+    padding: 14px;
+}
+
+/* Последний элемент */
+.column:last-child {
+    margin-right: 0;
+}
+
+/* Стили для колонок с разными статусами */
+.backlog h2 {
+    background-color: rgba(59, 59, 59, 0.2);
+    color: rgba(59, 59, 59);
+}
+
+.in-progress h2 {
+    background-color: rgba(0, 132, 255, 0.2);
+    color: rgba(0, 132, 255);
+}
+
+.done h2 {
+    background-color: rgba(9, 181, 17, 0.2);
+    color: rgba(9, 181, 17);
+}
+
+.trash h2 {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: rgba(255, 0, 0);
+}
+
+.clear {
+    font-size: 1.2rem;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Задачи */
+.task {
+    background-color: #ffffff;
+    width: 90%;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border-left: 5px solid; /* Базовая настройка для левой границы */
+}
+
+/* Цветовые контуры для задач в колонках */
+.backlog .task {
+    border-left-color: rgba(59, 59, 59, 0.2); /* Серый цвет */
+}
+
+.in-progress .task {
+    border-left-color: rgba(0, 132, 255, 0.2); /* Синий цвет */
+}
+
+.done .task {
+    border-left-color: rgba(9, 181, 17, 0.2); /* Зеленый цвет */
+}
+
+.trash .task {
+    border-left-color: rgba(255, 0, 0, 0.2); /* Красный цвет */
+}
+
+/* Медиа-запросы для респонсивности */
+@media (max-width: 1200px) {
+    .columns {
+        padding: 0 20px; /* Уменьшаем боковые отступы на больших экранах */
+    }
+}
+
+@media (max-width: 768px) {
+    .columns {
+        flex-direction: column; /* Размещаем колонки друг под другом */
+        padding: 0;
+    }
+
+    .column {
+        margin-right: 0;
+    }
+
+    .new-task {
+        width: 100%; /* Делаем секцию на всю ширину */
+        margin-left: 0;
+    }
+
+    .new-task input {
+        width: 100%; /* Поле ввода на всю ширину */
+    }
+
+    .new-task button {
+        width: 100%; /* Кнопка на всю ширину */
+        margin-left: 0;
+        margin-top: 10px; /* Добавляем отступ сверху */
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem; /* Уменьшаем размер заголовка на маленьких экранах */
+    }
+
+    .task {
+        padding: 0.5rem; /* Уменьшаем отступы для компактности */
+    }
+
+    .clear {
+        font-size: 1rem; /* Уменьшаем размер шрифта кнопки */
+    }
+}
