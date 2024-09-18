@@ -4,40 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Щелев Илья Владимирович</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/RPI LAB/css/styles.css">
+
 </head>
-<body>
-    <header> <h1>Список задач</h1> </header>
-    <main> 
-        <section class="new-task">
-            <h3>Новая задача</h3>
-            <input type="text" placeholder="Название задачи..." />
-            <button>+ Добавить</button>
-        </section>
-        <section class="columns">
-            <article class="column backlog">
-                <h2>Бэклог</h2>
-                <div class="task">пункт</div>
-                <div class="task">пункт</div>
-                <div class="task">пункт</div>
-            </article>
-            <article class="column in-progress">
-                <h2>В процессе</h2>
-                <div class="task">пункт</div>
-                <div class="task">пункт</div>
-            </article>
-            <article class="column done">
-                <h2>Готово</h2>
-                <div class="task">пункт</div>
-            </article>
-            <article class="column trash">
-                <h2>Корзина</h2>
-                <div class="task">пункт</div>
-                <button class="clear">✖ Очистить</button>
-            </article>
-        </section>
-    </main>
-    <aside> </aside>
-    <footer> </footer>
+<body class="board-app">
+
+
+  <main class="board-app__main">
+    <div class="board-app__inner">
+      <section class="add-task">
+        
+
+      </section>
+      <section class="taskboard">
+
+
+      </section>
+    </div>
+  </main>
+  <script src="src/main.js" type="module"></script>
 </body>
 </html>
