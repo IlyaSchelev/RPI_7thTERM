@@ -1,49 +1,53 @@
 import {createElement} from '../framework/render.js';
-
+import ListTaskComponent from './list-task-component.js';
 
 function createTaskBarComponentTemplate() {
-    return (
-        `<section class="columns">
-            <article class="column backlog">
-                <h2>Бэклог</h2>
-                <div class="task">пункт</div>
-                <div class="task">пункт</div>
-                <div class="task">пункт</div>
-            </article>
-            <article class="column in-progress">
-                <h2>В процессе</h2>
-                <div class="task">пункт</div>
-                <div class="task">пункт</div>
-            </article>
-            <article class="column done">
-                <h2>Готово</h2>
-                <div class="task">пункт</div>
-            </article>
-            <article class="column trash">
-                <h2>Корзина</h2>
-                <div class="task">пункт</div>
-                <button class="clear">✖ Очистить</button>
-            </article>
-        </section>`
-      );
+    return `<section class="task-bar"></section>`;
 }
 
-
 export default class TaskBarComponent {
+  constructor(tasksByStatus) {
+    this.tasksByStatus = tasksByStatus;
+  }
+
   getTemplate() {
     return createTaskBarComponentTemplate();
   }
 
-
   getElement() {
     if (!this.element) {
       this.element = createElement(this.getTemplate());
+      this.renderTaskLists();
     }
-
 
     return this.element;
   }
 
+  renderTaskLists() {
+    const taskBarElement = this.element;
+
+    Object.keys(this.tasksByStatus).forEach(status => {
+      let className;
+      switch (status) {
+        case 'К выполнению':
+          className = 'todo';
+          break;
+        case 'В процессе':
+          className = 'in-progress';
+          break;
+        case 'Готово':
+          className = 'done';
+          break;
+        case 'Корзина':
+          className = 'trash';
+          break;
+      }
+      
+
+      const taskListComponent = new ListTaskComponent(status, this.tasksByStatus[status], className);
+      taskBarElement.appendChild(taskListComponent.getElement());
+    });
+  }
 
   removeElement() {
     this.element = null;
