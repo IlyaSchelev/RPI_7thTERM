@@ -1,44 +1,38 @@
 import {createElement} from '../framework/render.js';
-import TaskComponent from './task-component.js';
+import TaskComponent from './task-component.js'; // Импортируем TaskComponent
 
-function createListTaskComponentTemplate(title, className) {
-    return `
-      <div class="task-block ${className}">
-        <h3>${title}</h3>
-        <ul class="task-list"></ul>
-      </div>
-    `;
+function createListTaskComponentTemplate() {
+    return (
+        `<li class="column backlog">
+          <h2 class="backlog">Бэклог</h2>
+          <ul class="task-list">
+          </ul>
+        </li>`
+    );
 }
 
 export default class ListTaskComponent {
-  constructor(title, tasks, className) {
-    this.title = title;
-    this.tasks = tasks;
-    this.className = className; // добавляем класс для колонки
-  }
-
-  getTemplate() {
-    return createListTaskComponentTemplate(this.title, this.className);
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-      this.renderTasks();
+    getTemplate() {
+        return createListTaskComponentTemplate();
     }
 
-    return this.element;
-  }
+    getElement() {
+        if (!this.element) {
+            this.element = createElement(this.getTemplate());
+            this.renderTasks(); 
+        }
+        return this.element;
+    }
 
-  renderTasks() {
-    const taskListElement = this.element.querySelector('.task-list');
-    this.tasks.forEach(task => {
-      const taskComponent = new TaskComponent(task);
-      taskListElement.appendChild(taskComponent.getElement());
-    });
-  }
+    renderTasks() {
+        const taskListElement = this.element.querySelector('.task-list');
+        for (let i = 0; i < 4; i++) {
+            const taskComponent = new TaskComponent();
+            taskListElement.append(taskComponent.getElement());
+        }
+    }
 
-  removeElement() {
-    this.element = null;
-  }
+    removeElement() {
+        this.element = null;
+    }
 }
