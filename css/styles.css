@@ -1,3 +1,4 @@
+/* Базовый стиль для всего документа */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f4f8;
@@ -7,109 +8,63 @@ body {
 
 /* Стили для заголовка */
 h1 {
-    font-family: Arial, sans-serif;
     background-color: #317efb;
     color: white;
     padding: 30px 50px;
     border-radius: 8px 8px 0 0;
     margin: -20px -20px 20px;
     text-align: left;
-    font-size: 2rem;
+    font-size: 2rem; /* Использование vw для респонсивных шрифтов */
 }
 
-/* Стили для секции с блоками задач */
 .task-bar {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-    padding: 0 50px;
 }
   
 .task-block {
-   
-    padding: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
     width: 22%;
     border-radius: 8px;
-    
 }
   
-.task-block h3 {
-    text-align: center;
-    background-color: rgba(86, 86, 86, 0.3); 
-    padding: 10px;
-    width:fit-content;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #343434;
-}
-
-/* Общие стили */
-.task-block h3 {
-    text-align: center;
-    padding: 10px;
-    width: fit-content;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #343434;
-}
-
-/* Стили для каждого статуса задач */
-.task-block.todo h3 {
-    background-color: rgb(128, 128, 128, 0.5);
-}
-
-.task-block.in-progress h3 {
-    background-color: rgb(0, 0, 255, 0.5);
-    color: white;
-}
-
-.task-block.done h3 {
-    background-color: rgb(0, 128, 0, 0.5);
-    color: white;
-}
-
-.task-block.trash h3 {
-    background-color: rgb(255, 0, 0, 0.5);
-    color: white;
-}
-
-
 .task-list {
     list-style-type: none;
     padding: 0;
-    margin: 0;
 }
   
 .task-item {
     background-color: #fff;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
   
+
 /* Секция новой задачи */
 .new-task {
-    margin-left: 70px;
+    margin-left: 50px;
     margin-bottom: 20px;
     margin-top: 50px;
-    width: 40%;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 40%; 
+    height: auto; 
+    padding: 20px; 
+    background-color: #ffffff; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .new-task h3 {
-    font-size: 2rem;
-    margin-top: 0;
+    font-size: 2rem; /* Использование rem для гибкости */
+    margin-top: 0px;
 }
 
 .new-task input {
     width: 60%;
-    padding: 1rem;
+    padding: 1rem; 
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 1rem;
@@ -124,4 +79,113 @@ h1 {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.column {
+    flex: 1;
+    margin-right: 50px;
+    margin-bottom: 20px; 
+}
+
+
+
+/* Последний элемент */
+.column:last-child {
+    margin-right: 0;
+}
+
+/* Стили для колонок с разными статусами */
+.backlog h2 {
+    background-color: rgba(59, 59, 59, 0.2);
+    color: rgba(59, 59, 59);
+}
+
+.in-progress h2 {
+    background-color: rgba(0, 132, 255, 0.2);
+    color: rgba(0, 132, 255);
+}
+
+.done h2 {
+    background-color: rgba(9, 181, 17, 0.2);
+    color: rgba(9, 181, 17);
+}
+
+.trash h2 {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: rgba(255, 0, 0);
+}
+
+
+
+.task {
+    background-color: #ffffff;
+    width: 90%;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border-left: 5px solid; 
+}
+
+/* Цветовые контуры для задач в колонках */
+.backlog .task {
+    border-left-color: rgba(59, 59, 59, 0.2); 
+}
+
+.in-progress .task {
+    border-left-color: rgba(0, 132, 255, 0.2); 
+}
+
+.done .task {
+    border-left-color: rgba(9, 181, 17, 0.2); 
+}
+
+.trash .task {
+    border-left-color: rgba(255, 0, 0, 0.2); 
+}
+
+
+@media (max-width: 1200px) {
+    .columns {
+        padding: 0 20px; 
+    }
+}
+
+@media (max-width: 768px) {
+    .columns {
+        flex-direction: column; 
+        padding: 0;
+    }
+
+    .column {
+        margin-right: 0;
+    }
+
+    .new-task {
+        width: 100%; 
+        margin-left: 0;
+    }
+
+    .new-task input {
+        width: 100%; 
+    }
+
+    .new-task button {
+        width: 100%; 
+        margin-left: 0;
+        margin-top: 10px; 
+    }
+} 
+
+ @media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem; 
+    }
+
+    .task {
+        padding: 0.5rem; 
+    }
+
+    .clear {
+        font-size: 1rem; 
+    }
 }
