@@ -1,10 +1,9 @@
-import {createElement} from '../framework/render.js';
-import TaskComponent from './task-component.js'; // Импортируем TaskComponent
+import { createElement } from '../framework/render.js';
 
-function createListTaskComponentTemplate() {
+function createListTaskComponentTemplate(status, title) {
     return (
-        `<li class="column backlog">
-          <h2 class="backlog">Бэклог</h2>
+        `<li class="column ${status}">
+          <h2 class="task">${title}</h2> 
           <ul class="task-list">
           </ul>
         </li>`
@@ -12,24 +11,22 @@ function createListTaskComponentTemplate() {
 }
 
 export default class ListTaskComponent {
+    constructor({ status, title }) {
+        this.status = status;
+        this.title = title;  // Заголовок передается при создании
+    }
+
     getTemplate() {
-        return createListTaskComponentTemplate();
+        // Используем заголовок и статус для создания корректной структуры
+        return createListTaskComponentTemplate(this.status, this.title);
     }
 
     getElement() {
         if (!this.element) {
             this.element = createElement(this.getTemplate());
-            this.renderTasks(); 
         }
-        return this.element;
-    }
 
-    renderTasks() {
-        const taskListElement = this.element.querySelector('.task-list');
-        for (let i = 0; i < 4; i++) {
-            const taskComponent = new TaskComponent();
-            taskListElement.append(taskComponent.getElement());
-        }
+        return this.element;
     }
 
     removeElement() {
