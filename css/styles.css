@@ -143,6 +143,13 @@ h1 {
     border-left-color: rgba(255, 0, 0, 0.2); 
 }
 
+ul {
+    list-style-type: none; /* Убирает маркеры */
+    padding: 0;            /* Убирает отступы */
+    margin: 0;             /* Убирает поля */
+}
+
+
 
 @media (max-width: 1200px) {
     .columns {
