@@ -1,8 +1,5 @@
 import { tasks } from '../mock/task.js';
 
-
-
-
 export default class TasksModel {
  boardtasks = tasks;
 
@@ -11,3 +8,4 @@ export default class TasksModel {
    return this.boardtasks;
  }
 }
+
