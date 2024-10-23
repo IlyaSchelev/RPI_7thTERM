@@ -126,6 +126,16 @@ h1 {
     border-left: 5px solid; 
 }
 
+.task-placeholder {
+    color: #999;
+    border: 2px dashed #ddd;
+    width: 80%;
+    padding: 2rem;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border-left: 5px solid;
+}
+
 /* Цветовые контуры для задач в колонках */
 .backlog .task {
     border-left-color: rgba(59, 59, 59, 0.2); 
