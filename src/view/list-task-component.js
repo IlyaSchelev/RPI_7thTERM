@@ -1,25 +1,25 @@
 import { AbstractComponent } from '../framework/view/abstract-component.js';
 
-function createListTaskComponentTemplate(status, title) {
+function createListTaskComponentTemplate(status, title, hasTasks) {
     return (
         `<li class="column ${status}">
-          <h2 class="task">${title}</h2> 
-          <ul class="task-list">
-          </ul>
+            <h2 class="task">${title}</h2>
+            <ul class="task-list">
+                ${hasTasks ? '' : '<li class="task-placeholder">Перетащите карточку</li>'}
+            </ul>
         </li>`
     );
 }
 
 export default class ListTaskComponent extends AbstractComponent {
-    constructor({ status, title }) {
-        // Вызов родительского конструктора
+    constructor({ status, title, hasTasks }) {
         super();
         this.status = status;
-        this.title = title;  // Заголовок передается при создании
+        this.title = title;
+        this.hasTasks = hasTasks;  // Флаг для контроля наличия задач
     }
 
     get template() {
-        // Используем заголовок и статус для создания корректной структуры
-        return createListTaskComponentTemplate(this.status, this.title);
+        return createListTaskComponentTemplate(this.status, this.title, this.hasTasks);
     }
 }
