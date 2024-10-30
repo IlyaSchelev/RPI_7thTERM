@@ -12,19 +12,4 @@ export default class TaskBarComponent extends AbstractComponent {
       get template() {
         return createTaskBarComponentTemplate();
       }
-    
-    
-      // getElement() {
-      //   if (!this.element) {
-      //     this.element = createElement(this.getTemplate());
-      //   }
-    
-    
-      //   return this.element;
-      // }
-    
-    
-      // removeElement() {
-      //   this.element = null;
-      // }
 }
