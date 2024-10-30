@@ -2,7 +2,7 @@ export const tasks = [
     {
         'id': '1',
         'title': 'Задача 1',
-        'status': 'backlog',
+        'status': 'in-progress',
     },
 
     {
@@ -26,13 +26,13 @@ export const tasks = [
     {
         'id': '5',
         'title': 'Задача 5',
-        'status': 'done',
+        'status': '',
     },
 
     {
        'id': '6',
         'title': 'Задача 6',
-        'status': 'done', 
+        'status': '', 
     },
 
     {
@@ -44,7 +44,7 @@ export const tasks = [
     {
        'id': '8',
         'title': 'Задача 8',
-        'status': 'done', 
+        'status': '', 
     },
 
     {
