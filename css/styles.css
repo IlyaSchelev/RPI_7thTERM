@@ -136,6 +136,7 @@ h1 {
     border-left: 5px solid;
 }
 
+
 /* Цветовые контуры для задач в колонках */
 .backlog .task {
     border-left-color: rgba(59, 59, 59, 0.2); 
@@ -151,6 +152,15 @@ h1 {
 
 .trash .task {
     border-left-color: rgba(255, 0, 0, 0.2); 
+}
+
+.clear {
+    background-color: #ff7d7d;
+    width: 10%;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border-left: 1px solid; 
 }
 
 ul {
