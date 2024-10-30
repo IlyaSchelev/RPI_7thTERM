@@ -15,21 +15,24 @@ export default class TaskComponent extends AbstractComponent {
     constructor({task}) {
         super();
         this.task = task;
+        this.#afterCreateElement();
     }
+
+    #afterCreateElement() {
+        this.#makeTaskDraggable();
+    }
+
+    #makeTaskDraggable() {
+        this.element.setAttribute('draggable', true);
+
+        this.element.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', this.task.id);
+        });
+    }
+        
 
     get template() {
         return createTaskComponentTemplate(this.task);
     }
 
-    // getElement() {
-    //     if (!this.element) {
-    //         this.element = createElement(this.getTemplate());
-    //     }
-
-    //     return this.element;
-    // }
-
-    // removeElement() {
-    //     this.element = null;
-    // }
 }
