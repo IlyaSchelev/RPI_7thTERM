@@ -1,41 +1,42 @@
-import { createElement } from '../framework/render.js';
 import { AbstractComponent } from '../framework/view/abstract-component.js';
 
-function createFormAddTaskComponentTemplate() {
+function createListTaskComponentTemplate(status, title, hasTasks) {
     return (
-        `<section class="new-task">
-            <h3>Новая задача</h3>
-            <input type="text" class="task-input" placeholder="Название задачи..." />
-            <button type="button" class="add-task-button">+ Добавить</button>
-        </section>`
+        `<li class="column ${status}">
+            <h2 class="task">${title}</h2>
+            <ul class="task-list">
+                ${hasTasks ? '' : '<li class="task-placeholder">Перетащите карточку</li>'}
+            </ul>
+        </li>`
     );
 }
 
-export default class FormAddTaskComponent extends AbstractComponent {
-
-  #handleClick = null;
-
-  constructor({ onClick }) {
-    super();
-    this.#handleClick = onClick;
-
-    this.element.querySelector('.add-task-button').addEventListener('click', this.#clickHandler);
-  }
-
-  get template() {
-    return createFormAddTaskComponentTemplate();
-  }
-
-  #clickHandler = (evt) => {
-    evt.preventDefault();
-
-    const taskInputValue = this.element.querySelector('.task-input').value.trim();
-    
-    if (taskInputValue) {
-      this.#handleClick(taskInputValue);  
-      this.element.querySelector('.task-input').value = '';  
-    } else {
-      alert('Введите название задачи');
+export default class ListTaskComponent extends AbstractComponent {
+    constructor({ status, title, hasTasks, onTaskDrop }) {
+        super();
+        this.status = status;
+        this.title = title;
+        this.hasTasks = hasTasks;
+        this.#setDropHandler(onTaskDrop);
     }
-  }
+
+    get template() {
+        return createListTaskComponentTemplate(this.status, this.title, this.hasTasks);
+    }
+
+    #setDropHandler(onTaskDrop) {
+        const container = this.element;
+
+        container.addEventListener('dragover', (event) => {
+            event.preventDefault();
+        });
+
+        container.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const taskId = event.dataTransfer.getData('text/plain');
+            onTaskDrop(taskId, this.status);
+        });
+
+    }
+
 }
