@@ -16,12 +16,19 @@ const tasksModel = new TasksModel();
 const tasksBoardPresenter = new TasksBoardPresenter({
  boardContainer: tasksBoardContainer, tasksModel,
 });
+const formAddTaskComponent = new FormAddTaskComponent({
+    onClick: handleNewTaskButtonClick,
+});
+
+function handleNewTaskButtonClick(taskTitle) {
+    tasksBoardPresenter.createTask(taskTitle);  // Передаем taskTitle
+}
+
 
 
 render(new HeaderComponent(), bodyContainer, RenderPosition.BEFOREBEGIN);
-render(new FormAddTaskComponent(), formContainer, RenderPosition.AFTERBEGIN);
+render(formAddTaskComponent, formContainer, RenderPosition.AFTERBEGIN);
 render(new TaskBarComponent(), tasksBoardContainer, RenderPosition.BEFOREBEGIN);
-// render(tasksBoardPresenter.tasksBoardComponent, tasksBoardContainer, RenderPosition.BEFOREBEGIN);
 render(new ClearButtonComponent(), tasksBoardContainer, RenderPosition.AFTEREND);
 
 tasksBoardPresenter.init();
