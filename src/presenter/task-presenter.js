@@ -14,7 +14,6 @@ export default class TaskPresenter {
     init() {
         this.#taskComponent = new TaskComponent({ task: this.#task });
 
-        // Рендерим компонент задачи
         render(this.#taskComponent, this.#taskContainer);
     }
 
