@@ -1,13 +1,38 @@
-import { tasks } from '../mock/task.js';
+import Observable from '../framework/observable.js';
+import { UpdateType } from '../const.js';
 import { generateUniqueId } from '../utils.js';
+import { UserAction } from '../const.js';
+import { Status } from '../const.js';
 
-export default class TasksModel {
-  #boardTasks = tasks;
+
+export default class TasksModel extends Observable {
+  #boardTasks = [];
   #observers = [];
-  
+  #tasksApiService = null;
 
 
-  getTasks() {
+  constructor({tasksApiService}) {
+    super();
+    this.#tasksApiService = tasksApiService;
+
+    this.#tasksApiService.tasks.then((tasks) => {
+      console.log(tasks);
+    });
+  }
+
+
+  async init() {
+    try {
+      const tasks = await this.#tasksApiService.tasks;
+      this.#boardTasks = tasks;
+    } catch(err) {
+      this.#boardTasks = [];
+    }
+    this._notify(UpdateType.INIT);
+  }
+
+
+  get tasks() {
     return this.#boardTasks;
   }
 
@@ -15,34 +40,80 @@ export default class TasksModel {
     return this.#boardTasks.filter(task => task.status === status);
   }
 
-  addTask(title) {
+  async addTask(title) {
     const newTask = {
       title,
       status: 'backlog',
       id: generateUniqueId(),
     };
-    this.#boardTasks.push(newTask);
-    this._notifyObservers();
-    return newTask;
+
+    try {
+      const createdTask = await this.#tasksApiService.addTask(newTask);
+      this.#boardTasks.push(createdTask);
+      this._notify(UserAction.ADD_TASK, createdTask);
+      return createdTask;
+    } catch (err) {
+      console.error('Ошибка при добавлении задачи на сервер:', err);
+      throw err;
+    }
+
   }
 
-  updateTaskStatus(taskId, newStatus) {
+    async updateTaskStatus(taskId, newStatus) {
     const task = this.#boardTasks.find(task => task.id === taskId);
     if (task) {
         task.status = newStatus;
-        this._notifyObservers();
+        
+    }
+
+    try {
+      const updateTask = await this.#tasksApiService.updateTask(task);
+      Object.assign(task, updateTask);
+      this._notify(UserAction.UPDATE_TASK, task);
+    } catch (err) {
+      console.error('Ошибка при обновлении статуса задачи на сервер:', err);
+      task.status = previousStatus;
+      throw err;
+    }
+  }
+
+  deleteTask(taskId) {
+    this.#boardTasks = this.#boardTasks.filter(task => task.id !== taskId);
+    this._notify(UserAction.DELETE_TASK, {id: taskId});
+  }
+
+  async clearBasketTasks() {
+    const basketTasks = this.#boardTasks.filter(task => task.status === Status.TRASH);
+
+    try {
+        // Удаляем задачи из локального массива
+        this.#boardTasks = this.#boardTasks.filter(task => task.status !== Status.TRASH);
+
+        // Теперь удалим их с сервера
+        await Promise.all(basketTasks.map(task => this._deleteTaskFromServer(task.id)));
+
+        console.log('Корзина очищена');
+        this._notify(UserAction.CLEAR_BASKET);
+    } catch (err) {
+        console.error('Ошибка при очистке корзины:', err);
     }
 }
 
-  addObserver(observer) {
-    this.#observers.push(observer);
+async _deleteTaskFromServer(taskId) {
+  const url = `${this.#tasksApiService._endPoint}/tasks/${taskId}`;
+  try {
+      const response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      if (!response.ok) {
+          throw new Error(`Ошибка при удалении задачи с ID ${taskId}`);
+      }
+      console.log(`Задача с ID ${taskId} успешно удалена с сервера`);
+  } catch (err) {
+      console.error('Ошибка при удалении задачи с сервера:', err);
   }
-
-  removeObserver(observer) {
-    this.#observers = this.#observers.filter((obs) => obs!== observer);
-  }
-
-  _notifyObservers() {
-    this.#observers.forEach((observer) => observer());
-  }
+}
 }
