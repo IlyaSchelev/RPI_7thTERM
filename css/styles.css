@@ -156,12 +156,14 @@ h1 {
 
 .clear {
     background-color: #ff7d7d;
-    width: 10%;
+    width: 30%;
     padding: 1rem;
     border-radius: 4px;
     margin-bottom: 10px;
     border-left: 1px solid; 
 }
+
+
 
 ul {
     list-style-type: none; /* Убирает маркеры */
