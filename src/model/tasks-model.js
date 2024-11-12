@@ -23,13 +23,14 @@ export default class TasksModel extends Observable {
 
   async init() {
     try {
-      const tasks = await this.#tasksApiService.tasks;
-      this.#boardTasks = tasks;
+        const tasks = await this.#tasksApiService.tasks;
+        this.#boardTasks = tasks;
     } catch(err) {
-      this.#boardTasks = [];
+        this.#boardTasks = [];
     }
-    this._notify(UpdateType.INIT);
-  }
+    this._notify(UpdateType.INIT);  // оповещаем после завершения загрузки
+}
+
 
 
   get tasks() {
