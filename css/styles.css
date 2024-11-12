@@ -163,7 +163,10 @@ h1 {
     border-left: 1px solid; 
 }
 
-
+.board__no-tasks{
+    font-size: 50px;
+    text-align: center;
+}
 
 ul {
     list-style-type: none; /* Убирает маркеры */
