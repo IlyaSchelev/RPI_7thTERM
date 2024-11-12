@@ -1,6 +1,7 @@
 import TasksListComponent from '../view/list-task-component.js';
 import TaskBoardComponent from '../view/taskbar-component.js';
 import ClearButtonComponent from '../view/clear-button-component.js';
+import LoadingViewComponent from '../view/loading-view-component.js';
 import { Status, StatusLabel } from '../const.js';
 import { render } from '../framework/render.js';
 import TasksModel from '../model/tasks-model.js';
@@ -12,7 +13,9 @@ export default class TasksBoardPresenter {
     #boardTasks;
     #tasksBoardComponent = new TaskBoardComponent();
     #clearButtonComponent = new ClearButtonComponent();
-    #taskPresenters = new Map(); 
+    #loadingComponent = new LoadingViewComponent();  // добавляем компонент загрузки
+    #isLoading = true;  // изначально данные загружаются
+    #taskPresenters = new Map();
     
     constructor({ boardContainer, tasksModel }) {
         this.#boardContainer = boardContainer;
@@ -21,13 +24,17 @@ export default class TasksBoardPresenter {
     }
 
     #handleModelChange() {
+        if (this.#isLoading) return;  // если данные еще загружаются, выходим
+    
         this.#clearBoard();
-        this.#renderTasksList();
+        this.#renderBoard();
     }
+    
 
     #clearBoard() {
-        this.#tasksBoardComponent.element.innerHTML = '';
+        this.#boardContainer.innerHTML = '';  // очищаем контейнер
     }
+    
 
     async #handleClearBasketClick() {
         console.log("Очистка корзины началась");
@@ -64,9 +71,13 @@ export default class TasksBoardPresenter {
     }
 
     async init() {
-        await this.#tasksModel.init(); 
-        this.#clearBoard();
-        this.#renderBoard();
+        render(this.#loadingComponent, this.#boardContainer);  // отображаем компонент загрузки
+
+        await this.#tasksModel.init();  // ждем, пока данные загрузятся
+
+        this.#isLoading = false;  // отключаем состояние загрузки после завершения
+        this.#clearBoard();  // очищаем загрузочный компонент
+        this.#renderBoard();  // рендерим основное содержимое
     }
      
 
