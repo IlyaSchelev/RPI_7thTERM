@@ -163,10 +163,18 @@ h1 {
     border-left: 1px solid; 
 }
 
+button.clear:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+
 .board__no-tasks{
     font-size: 50px;
     text-align: center;
 }
+
 
 ul {
     list-style-type: none; /* Убирает маркеры */
