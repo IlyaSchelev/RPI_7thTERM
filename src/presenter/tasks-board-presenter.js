@@ -156,50 +156,45 @@ export default class TasksBoardPresenter {
     }
 
     #renderTrashList() {
-        let trashContainer = this.#tasksBoardComponent.element.querySelector(`.${Status.TRASH}`);
-        if (!trashContainer) {
-            trashContainer = document.createElement('li');
-            trashContainer.className = `column ${Status.TRASH}`;
-            this.#tasksBoardComponent.element.appendChild(trashContainer);
-        }
-    
-        const tasksByStatus = this.#boardTasks.filter(task => task.status === Status.TRASH);
-        const hasTasks = tasksByStatus.length > 0;
-    
-        const tasksListComponent = new TasksListComponent({
-            status: Status.TRASH,
-            title: StatusLabel[Status.TRASH],
-            hasTasks,
-            onTaskDrop: this.#handleTaskDrop.bind(this),
-        });
-    
-        trashContainer.innerHTML = ''; 
-        render(tasksListComponent, trashContainer);
-    
-        tasksByStatus.forEach(task => {
-            this.#renderTask(task, tasksListComponent.element.querySelector('.task-list'));
-        });
-    
-        render(this.#clearButtonComponent, trashContainer);
-    
-        // Update button disabled state
-        const clearButtonElement = this.#clearButtonComponent.element;
-        clearButtonElement.disabled = !hasTasks;
-    
-        clearButtonElement.removeEventListener('click', this.#handleClearBasketClick);
-        clearButtonElement.addEventListener('click', () => {
-            if (hasTasks) {
-                this.#handleClearBasketClick();  
-            } else {
-                console.log('Корзина пуста, очистка невозможна.');
-            }
-        });
+    let trashContainer = this.#tasksBoardComponent.element.querySelector(`.${Status.TRASH}`);
+    if (!trashContainer) {
+        trashContainer = document.createElement('li');
+        trashContainer.className = `column ${Status.TRASH}`;
+        this.#tasksBoardComponent.element.appendChild(trashContainer);
     }
-    
-    
-    
-    
-    
+
+    const tasksByStatus = this.#boardTasks.filter(task => task.status === Status.TRASH);
+    const hasTasks = tasksByStatus.length > 0;
+
+    const tasksListComponent = new TasksListComponent({
+        status: Status.TRASH,
+        title: StatusLabel[Status.TRASH],
+        hasTasks,
+        onTaskDrop: this.#handleTaskDrop.bind(this),
+    });
+
+    trashContainer.innerHTML = ''; 
+    render(tasksListComponent, trashContainer);
+
+    tasksByStatus.forEach(task => {
+        this.#renderTask(task, tasksListComponent.element.querySelector('.task-list'));
+    });
+
+    render(this.#clearButtonComponent, trashContainer);
+
+    // Update button disabled state
+    const clearButtonElement = this.#clearButtonComponent.element;
+    clearButtonElement.disabled = !hasTasks;
+
+    clearButtonElement.removeEventListener('click', this.#handleClearBasketClick);
+    clearButtonElement.addEventListener('click', () => {
+        if (hasTasks) {
+            this.#handleClearBasketClick();  
+        } else {
+            console.log('Корзина пуста, очистка невозможна.');
+        }
+    });
+}
 
     
 }
