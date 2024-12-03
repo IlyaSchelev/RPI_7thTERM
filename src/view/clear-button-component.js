@@ -8,20 +8,8 @@ function createClearButtonComponentTemplate() {
 }
 
 export default class ClearButtonComponent extends AbstractComponent {
-
     get template() {
-        return createClearButtonComponentTemplate();
+        return `<button class="clear">Очистить</button>`;
     }
-
-    // getElement() {
-    //     if (!this.element) {
-    //         this.element = createElement(this.getTemplate());
-    //     }
-
-    //     return this.element;
-    // }
-
-    // removeElement() {
-    //     this.element = null;
-    // }
 }
+
