@@ -170,7 +170,7 @@ export default class TasksBoardPresenter {
             status: Status.TRASH,
             title: StatusLabel[Status.TRASH],
             hasTasks,
-            onTaskDrop: this.#handleTaskDrop.bind(this)
+            onTaskDrop: this.#handleTaskDrop.bind(this),
         });
     
         trashContainer.innerHTML = ''; 
@@ -182,10 +182,12 @@ export default class TasksBoardPresenter {
     
         render(this.#clearButtonComponent, trashContainer);
     
-        
+        // Update button disabled state
+        const clearButtonElement = this.#clearButtonComponent.element;
+        clearButtonElement.disabled = !hasTasks;
     
-        this.#clearButtonComponent.element.removeEventListener('click', this.#handleClearBasketClick);
-        this.#clearButtonComponent.element.addEventListener('click', () => {
+        clearButtonElement.removeEventListener('click', this.#handleClearBasketClick);
+        clearButtonElement.addEventListener('click', () => {
             if (hasTasks) {
                 this.#handleClearBasketClick();  
             } else {
@@ -193,6 +195,7 @@ export default class TasksBoardPresenter {
             }
         });
     }
+    
     
     
     
